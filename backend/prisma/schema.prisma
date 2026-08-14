@@ -1,0 +1,25 @@
+// 1. Configuración del cliente de Prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 2. Configuración de la conexión a la Base de Datos
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 3. Tus modelos actuales
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+}
