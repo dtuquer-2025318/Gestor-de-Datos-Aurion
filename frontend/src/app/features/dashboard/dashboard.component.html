@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURION - Panel de Control</title>
+</head>
+<body>
+  <div class="main-bg min-vh-100">
+    <nav class="navbar navbar-expand-lg header-dark border-bottom border-dark-subtle sticky-top px-4">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#">
+          <div class="logo-small">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <span>AURION</span>
+        </a>
+
+        <div class="d-flex align-items-center gap-3 ms-auto">
+          <div class="d-none d-sm-flex flex-column text-end" *ngIf="currentUser()">
+            <span class="text-white fw-semibold fs-7">{{ currentUser()?.name }}</span>
+            <span class="text-white-50 fs-8">{{ currentUser()?.email }}</span>
+          </div>
+
+          <span class="badge rounded-pill px-3 py-2 border" 
+            [ngClass]="currentUser()?.role === 'ADMIN' ? 'bg-danger-subtle text-danger border-danger-subtle' : 'bg-primary-subtle text-primary border-primary-subtle'">
+            <i class="bi me-1" [ngClass]="currentUser()?.role === 'ADMIN' ? 'bi-shield-lock' : 'bi-person'"></i>
+            {{ currentUser()?.role }}
+          </span>
+
+          <button class="btn btn-outline-light btn-sm rounded-3 d-flex align-items-center gap-2 ms-2" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i>
+            <span class="d-none d-md-inline">Salir</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <main class="container py-5">
+      <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+          <h2 class="fw-bold mb-1">Panel de Control</h2>
+          <p class="text-muted fs-7 mb-0">Gestión de sesión activa y privilegios asignados mediante JWT.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <span class="badge-status">
+            <span class="pulse-dot"></span>
+            Conexión Segura (JWT Active)
+          </span>
+        </div>
+      </div>
+      <div *ngIf="currentUser()?.role === 'ADMIN'" class="card banner-admin border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+        <div class="card-body p-4 text-white d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+          <div class="d-flex align-items-center gap-3">
+            <div class="box-icon admin">
+              <i class="bi bi-sliders fs-3"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-1">Módulo de Administración</h5>
+              <p class="mb-0 text-white-50 fs-7">Tienes acceso completo para gestionar usuarios, cambiar roles y revisar logs del servidor.</p>
+            </div>
+          </div>
+          <button class="btn btn-light btn-sm fw-bold px-4 py-2 rounded-3 text-nowrap">
+            <i class="bi bi-gear-fill me-1"></i> Configurar Sistema
+          </button>
+        </div>
+      </div>
+      <div *ngIf="currentUser()?.role === 'USER'" class="card border-0 shadow-sm mb-4 rounded-4 bg-white p-2">
+        <div class="card-body d-flex align-items-center gap-3">
+          <div class="box-icon user">
+            <i class="bi bi-person-workspace fs-3 text-primary"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-1">Vista de Usuario Estándar</h5>
+            <p class="mb-0 text-muted fs-7">Tu cuenta posee permisos de lectura y consulta de datos. Si requieres accesos administrativos, contacta a un administrador.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card card-metric border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted fs-7 fw-semibold">IDENTIFICADOR ÚNICO</span>
+                <i class="bi bi-fingerprint text-brand fs-4"></i>
+              </div>
+              <h6 class="fw-bold text-dark text-truncate mb-0" [title]="currentUser()?.id">
+                {{ currentUser()?.id }}
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-metric border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted fs-7 fw-semibold">CORREO REGISTRADO</span>
+                <i class="bi bi-envelope-at text-brand fs-4"></i>
+              </div>
+              <h6 class="fw-bold text-dark mb-0">
+                {{ currentUser()?.email }}
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-metric border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted fs-7 fw-semibold">ROL DE ACCESO</span>
+                <i class="bi bi-shield-check text-brand fs-4"></i>
+              </div>
+              <h6 class="fw-bold text-dark mb-0">
+                {{ currentUser()?.role }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
