@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --bg-dark-surface: #0f172a;
+    --brand-primary: #4f46e5;
+    --brand-primary-hover: #4338ca;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: #f8fafc;
+    color: #1e293b;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Transiciones globales */
+.btn, .form-control, .card {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
